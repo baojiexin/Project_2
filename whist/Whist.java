@@ -103,7 +103,7 @@ public class Whist extends CardGame {
 		 addActor(scoreActors[i], scoreLocations[i]);
 	 }
   }
-	/** New : Initiate players' information*/
+	/** New : initialise players' information*/
   private void initPlayers(Map<Integer, String> map){
 	for(int i = 0; i < nbPlayers; i++){
 		map.put(i, "NPC");
