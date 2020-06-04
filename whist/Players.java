@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
-
+/**
+ * This class is used to manage the way that players follow to play the game,
+ * Associated with rules.
+ */
 
 @SuppressWarnings("serial")
 public class Players extends CardGame {
@@ -38,21 +41,30 @@ public class Players extends CardGame {
   private final Location textLocation = new Location(350, 450);
   public static Location trumpsActorLocation = new Location(50, 50);
   Font bigFont = new Font("Serif", Font.BOLD, 36);
+  public static final Location trickLocation = new Location(350, 350);
+  public static final int trickWidth = 40;
 
-
+  /**
+   *  Function used to set current game status.
+   * @param string
+   */
   public void setStatus(String string) { setStatusText(string); }
 
+  /**
+   * Function used to initialise score information for each player.
+   */
   private void initScore() {
 	  GameInformation.scores = new int[GameInformation.nbPlayers];
 	 for (int i = 0; i < GameInformation.nbPlayers; i++) {
 		 //scores[i] = 0;
 		 GameInformation.scores[i] = 0;
-		 System.out.println(GameInformation.scores[i]);
 		 scoreActors[i] = new TextActor("0", Color.WHITE, bgColor, bigFont);
 		 addActor(scoreActors[i], scoreLocations[i]);
 	 }
   }
-	/** New : initialise players' information*/
+  /**
+   * New : initialise players' information
+   */
   private void initPlayers(Map<Integer, String> map){
 	for(int i = 0; i < GameInformation.nbPlayers; i++){
 		map.put(i, "NPC");
@@ -81,13 +93,20 @@ public class Players extends CardGame {
 	}
   }
 
+	/**
+	 * Function used to update Score after each play round.
+	 * @param player
+	 */
   private void updateScore(int player) {
 	removeActor(scoreActors[player]);
 	scoreActors[player] = new TextActor(String.valueOf(GameInformation.scores[player]), Color.WHITE, bgColor, bigFont);
 	addActor(scoreActors[player], scoreLocations[player]);
   }
-
   public static Card selected;
+
+  /**
+   * Function used to initialise cards in hands.
+   */
   private void initRound() {
   	GameInformation.hands = deck.dealingOut(GameInformation.nbPlayers, GameInformation.nbStartCards); // Last element of hands is leftover cards; these are ignored.
 	  for (int i = 0; i < GameInformation.nbPlayers; i++) {
@@ -106,14 +125,17 @@ public class Players extends CardGame {
 	      layouts[i].setRotationAngle(90 * i);
 	      // layouts[i].setStepDelay(10);
 			GameInformation.hands[i].setView(this, layouts[i]);
-			GameInformation.hands[i].setTargetArea(new TargetArea(GameInformation.trickLocation));
+			GameInformation.hands[i].setTargetArea(new TargetArea(trickLocation));
 			GameInformation.hands[i].draw();
 	    }
 //	    for (int i = 1; i < nbPlayers; i++)  // This code can be used to visually hide the cards in a hand (make them face down)
 //	      hands[i].setVerso(true);
 	    // End graphics
  }
- /** Newly changed: Now it works with Player, NPC and Smart NPC*/
+
+ /** Newly changed: The way with rules players follow to play the game
+  * Now it works with Player, NPC and Smart NPC
+  * */
  private Optional<Integer> playRound() {  // Returns winner, if any
  	final CardsInformation.Suit trumps = GameInformation.randomEnum(CardsInformation.Suit.class);
  	final Actor trumpsActor = new Actor("sprites/"+CardsInformation.trumpImage[trumps.ordinal()]);
@@ -152,7 +174,7 @@ public class Players extends CardGame {
         	hasTrumpOnBoard = true;
 		}
         // Lead with selected card
-		trick.setView(this, new RowLayout(GameInformation.trickLocation, (trick.getNumberOfCards()+2)*GameInformation.trickWidth));
+		trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
         trick.draw();
         selected.setVerso(false);
         // No restrictions on the card being lead
@@ -188,7 +210,7 @@ public class Players extends CardGame {
 				hasTrumpOnBoard = true;
 			}
 	        // Follow with selected card
-			trick.setView(this, new RowLayout(GameInformation.trickLocation, (trick.getNumberOfCards()+2)*GameInformation.trickWidth));
+			trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
 	        trick.draw();
 	        selected.setVerso(false);  // In case it is upside down
 			// Check: Following card must follow suit if possible
@@ -255,7 +277,7 @@ public class Players extends CardGame {
   }
 
 
-//  /** New Function used to find the largest trump card that has already been played on board*/
+  /** New Function used to find the largest trump card that has already been played on board*/
   private Card largestTrumpOnBoard(ArrayList<Card> currentCards, CardsInformation.Suit trump){
   	Card largestTrumpCard = null;
   	for(int i = 0; i < currentCards.size(); i++){

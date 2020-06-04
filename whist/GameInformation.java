@@ -4,13 +4,19 @@ import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
 import ch.aplu.jgamegrid.Location;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * This class hold all information during the game period like the number and type of players, cards that have already been
+ * played on board and scores for each players etc.
+ */
 public class GameInformation extends CardGame{
+    /**
+     * Data held during the game period.
+     */
     public  static int nbPlayers = 0;
     public  static int nbStartCards = 0;
     public  static int winningScore = 0;
@@ -27,31 +33,47 @@ public class GameInformation extends CardGame{
     public static ArrayList<Card> currentCards = new ArrayList<>();
     public static Map<Integer, String> players = new HashMap();
     public static Hand[] hands;
-    public static final Location trickLocation = new Location(350, 350);
-    public static final int trickWidth = 40;
+
     public static Location hideLocation = new Location(-500, - 500);
     public static int[] scores;
 
-    public static Font bigFont = new Font("Serif", Font.BOLD, 36);
-    // return random Enum value
-
+    /**
+     * return random Enum value
+     * @param clazz
+     * @param <T>
+     * @return
+     */
     public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
         int x = random.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }
 
-    // return random Card from Hand
+    /**
+     * return random Card from Hand
+     * @param hand
+     * @return
+     */
     public static Card randomCard(Hand hand){
         int x = random.nextInt(hand.getNumberOfCards());
         return hand.get(x);
     }
 
-    // return random Card from ArrayList
+    /**
+     * // return random Card from ArrayList
+     * @param list
+     * @return
+     */
     public static Card randomCard(ArrayList<Card> list){
         int x = random.nextInt(list.size());
         return list.get(x);
     }
 
+    /**
+     * Function that used to compare whose rank has priority.
+     * @param card1
+     * @param card2
+     * @return
+     */
     public static boolean rankGreater(Card card1, Card card2) {
         return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
     }

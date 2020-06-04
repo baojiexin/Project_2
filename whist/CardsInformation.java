@@ -1,11 +1,18 @@
-import ch.aplu.jcardgame.Card;
-
+/**
+ * This class is used for managing Cards Suit and Rank.
+ */
 public class CardsInformation {
+    /**
+     * Enum for card suit: Spades, Hearts, Diamonds and Clubs.
+     */
     public enum Suit
     {
         SPADES, HEARTS, DIAMONDS, CLUBS
     }
 
+    /**
+     * Enum for card rank: From 2 to 10, J to A.
+     */
     public enum Rank
     {
         // Reverse order of rank importance (see rankGreater() below)
@@ -14,11 +21,5 @@ public class CardsInformation {
     }
 
     final static String trumpImage[] = {"bigspade.gif","bigheart.gif","bigdiamond.gif","bigclub.gif"};
-
-
-
-    public static boolean rankGreater(Card card1, Card card2) {
-        return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
-    }
 
 }
