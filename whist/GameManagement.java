@@ -50,7 +50,7 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
 
 	@Override
 	public void setStatus(String string) { setStatusText(string); }
-
+/*---------------------------------------------------------------------------------------*/
   /**
    * Function used to initialise score information for each player.
    */
@@ -140,6 +140,7 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
 	    // End graphics
   }
 
+/*------------------------------------------------------------------------------------------*/
  /** Newly changed: The way with rules players follow to play the game
   * Now it works with Player, NPC and Smart NPC
   * */
@@ -284,7 +285,7 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
     refresh();
   }
 
-
+/*------------------------------------------------------------------------------------------*/
   /** New Function used to find the largest trump card that has already been played on board*/
   private Card largestTrumpOnBoard(ArrayList<Card> currentCards, CardsInformation.Suit trump){
   	Card largestTrumpCard = null;
@@ -297,7 +298,8 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
 	}
   	return largestTrumpCard;
   }
-
+  
+/*------------------------------------------------------------------------------------------*/
 	/** New Function used for normal NPC to follow the rules*/
 	@Override
 	public Card NPCSelection(Hand hand, CardsInformation.Suit lead, CardsInformation.Suit trumps){
