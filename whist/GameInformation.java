@@ -1,5 +1,7 @@
-import ch.aplu.jcardgame.*;
-import ch.aplu.jgamegrid.Actor;
+import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.CardGame;
+import ch.aplu.jcardgame.Deck;
+import ch.aplu.jcardgame.Hand;
 import ch.aplu.jgamegrid.Location;
 
 import java.util.ArrayList;
@@ -26,22 +28,14 @@ public class GameInformation extends CardGame{
     public static boolean enforceRules = false;
     public  static Random random;
 
-    public static Location trumpsActorLocation = new Location(50, 50);
     public static Deck deck = new Deck(CardsInformation.Suit.values(), CardsInformation.Rank.values(), "cover");
     public static ArrayList<Card> currentCards = new ArrayList<>();
     public static Map<Integer, String> players = new HashMap();
     public static Hand[] hands;
 
     public static Location hideLocation = new Location(-500, - 500);
-    public static Actor[] scoreActors = {null, null, null, null };
+
     public static int[] scores;
-    public static Card selected;
-    private final Location[] handLocations = {
-            new Location(350, 625),
-            new Location(75, 350),
-            new Location(350, 75),
-            new Location(625, 350)
-    };
 
 
     /**
