@@ -1,10 +1,12 @@
 import ch.aplu.jcardgame.Card;
-import ch.aplu.jcardgame.CardGame;
 import ch.aplu.jcardgame.Hand;
 
-import java.util.ArrayList;
-
-public class PlayersMode extends CardGame{
+/**
+ * Interface with functions for different level AI players to select card.
+ * Now have to static function NPCSelection and SmartSelection.
+ * Can be extended in the future.
+ */
+public interface PlayersMode {
     /** New Function used for normal NPC to follow the rules*/
     public static Card NPCSelection(Hand hand, CardsInformation.Suit lead, CardsInformation.Suit trumps){
         if (lead != null) {
@@ -98,20 +100,4 @@ public class PlayersMode extends CardGame{
             }
         }
     }
-
-    /** New Function used to find the largest trump card that has already been played on board*/
-    private Card largestTrumpOnBoard(ArrayList<Card> currentCards, CardsInformation.Suit trump){
-        Card largestTrumpCard = null;
-        for(int i = 0; i < currentCards.size(); i++){
-            if(currentCards.get(i).getSuit() == trump){
-                if(largestTrumpCard == null || currentCards.get(i).getRankId() < largestTrumpCard.getRankId()){
-                    largestTrumpCard = currentCards.get(i);
-                }
-            }
-        }
-        return largestTrumpCard;
-    }
-
-
-
 }

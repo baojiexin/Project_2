@@ -1,7 +1,5 @@
-import ch.aplu.jcardgame.Card;
-import ch.aplu.jcardgame.CardGame;
-import ch.aplu.jcardgame.Deck;
-import ch.aplu.jcardgame.Hand;
+import ch.aplu.jcardgame.*;
+import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 
 import java.util.ArrayList;
@@ -35,7 +33,16 @@ public class GameInformation extends CardGame{
     public static Hand[] hands;
 
     public static Location hideLocation = new Location(-500, - 500);
+    public static Actor[] scoreActors = {null, null, null, null };
     public static int[] scores;
+    public static Card selected;
+    private final Location[] handLocations = {
+            new Location(350, 625),
+            new Location(75, 350),
+            new Location(350, 75),
+            new Location(625, 350)
+    };
+
 
     /**
      * return random Enum value
@@ -78,5 +85,34 @@ public class GameInformation extends CardGame{
         return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
     }
 
-
+    /**
+     * New : initialise players' information
+     */
+    public static void initPlayers(){
+        for(int i = 0; i < nbPlayers; i++){
+            players.put(i, "NPC");
+        }
+        if(Interactive_Player >= 1){
+            for (int i = 0; i < Interactive_Player; i++){
+                players.put(i,"Player");
+            }
+        }
+        if(Smart_NPC >= 1){
+            int marked = 0;
+            int i = 0;
+            while(marked < Smart_NPC){
+                if(players.get(i) == "NPC"){
+                    players.put(i, "Smart_NPC");
+                    marked++;
+                    i++;
+                }
+                else {
+                    i++;
+                }
+                if(i > nbPlayers){
+                    break;
+                }
+            }
+        }
+    }
 }

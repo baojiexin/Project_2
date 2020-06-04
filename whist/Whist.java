@@ -53,7 +53,7 @@ public class Whist extends CardGame {
             System.out.println("No Seed");
         }
         // System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        new Players();
+        new GameManagement();
     }
 
 

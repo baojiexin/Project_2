@@ -7,7 +7,6 @@ import ch.aplu.jgamegrid.TextActor;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -16,7 +15,7 @@ import java.util.Optional;
  */
 
 @SuppressWarnings("serial")
-public class Players extends CardGame {
+public class GameManagement extends CardGame implements IGameManagement,PlayersMode{
 
   private final String version = "1.0";
   /**
@@ -44,16 +43,19 @@ public class Players extends CardGame {
   public static final Location trickLocation = new Location(350, 350);
   public static final int trickWidth = 40;
 
-  /**
+	/**
    *  Function used to set current game status.
    * @param string
    */
-  public void setStatus(String string) { setStatusText(string); }
+
+	@Override
+	public void setStatus(String string) { setStatusText(string); }
 
   /**
    * Function used to initialise score information for each player.
    */
-  private void initScore() {
+  @Override
+  public void initScore() {
 	  GameInformation.scores = new int[GameInformation.nbPlayers];
 	 for (int i = 0; i < GameInformation.nbPlayers; i++) {
 		 //scores[i] = 0;
@@ -62,52 +64,57 @@ public class Players extends CardGame {
 		 addActor(scoreActors[i], scoreLocations[i]);
 	 }
   }
-  /**
-   * New : initialise players' information
-   */
-  private void initPlayers(Map<Integer, String> map){
-	for(int i = 0; i < GameInformation.nbPlayers; i++){
-		map.put(i, "NPC");
-	}
-	if(GameInformation.Interactive_Player >= 1){
-		for (int i = 0; i < GameInformation.Interactive_Player; i++){
-			map.put(i,"Player");
+
+	/**
+	 * New : initialise players' information
+	 */
+	@Override
+	public void initPlayers(){
+		for(int i = 0; i < GameInformation.nbPlayers; i++){
+			GameInformation.players.put(i, "NPC");
 		}
-	}
-	if(GameInformation.Smart_NPC >= 1){
-		int marked = 0;
-		int i = 0;
-		while(marked < GameInformation.Smart_NPC){
-			if(map.get(i) == "NPC"){
-				map.put(i, "Smart_NPC");
-				marked++;
-				i++;
-			}
-			else {
-				i++;
-			}
-			if(i > GameInformation.nbPlayers){
-				break;
+		if(GameInformation.Interactive_Player >= 1){
+			for (int i = 0; i < GameInformation.Interactive_Player; i++){
+				GameInformation.players.put(i,"Player");
 			}
 		}
+		if(GameInformation.Smart_NPC >= 1){
+			int marked = 0;
+			int i = 0;
+			while(marked < GameInformation.Smart_NPC){
+				if(GameInformation.players.get(i) == "NPC"){
+					GameInformation.players.put(i, "Smart_NPC");
+					marked++;
+					i++;
+				}
+				else {
+					i++;
+				}
+				if(i > GameInformation.nbPlayers){
+					break;
+				}
+			}
+		}
 	}
-  }
 
 	/**
 	 * Function used to update Score after each play round.
 	 * @param player
 	 */
-  private void updateScore(int player) {
+	@Override
+	public void updateScore(int player) {
 	removeActor(scoreActors[player]);
 	scoreActors[player] = new TextActor(String.valueOf(GameInformation.scores[player]), Color.WHITE, bgColor, bigFont);
 	addActor(scoreActors[player], scoreLocations[player]);
   }
+
   public static Card selected;
 
   /**
    * Function used to initialise cards in hands.
    */
-  private void initRound() {
+  @Override
+  public void initRound() {
   	GameInformation.hands = deck.dealingOut(GameInformation.nbPlayers, GameInformation.nbStartCards); // Last element of hands is leftover cards; these are ignored.
 	  for (int i = 0; i < GameInformation.nbPlayers; i++) {
 		  GameInformation.hands[i].sort(Hand.SortType.SUITPRIORITY, true);
@@ -131,12 +138,13 @@ public class Players extends CardGame {
 //	    for (int i = 1; i < nbPlayers; i++)  // This code can be used to visually hide the cards in a hand (make them face down)
 //	      hands[i].setVerso(true);
 	    // End graphics
- }
+  }
 
  /** Newly changed: The way with rules players follow to play the game
   * Now it works with Player, NPC and Smart NPC
   * */
- private Optional<Integer> playRound() {  // Returns winner, if any
+ @Override
+ public Optional<Integer> playRound() {  // Returns winner, if any
  	final CardsInformation.Suit trumps = GameInformation.randomEnum(CardsInformation.Suit.class);
  	final Actor trumpsActor = new Actor("sprites/"+CardsInformation.trumpImage[trumps.ordinal()]);
  	addActor(trumpsActor, trumpsActorLocation);
@@ -258,13 +266,13 @@ public class Players extends CardGame {
 	return Optional.empty();
 }
 
-  public Players()
+  public GameManagement()
   {
     super(700, 700, 30);
     setTitle("Whist (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
     setStatusText("Initializing...");
     initScore();
-    initPlayers(GameInformation.players);
+    initPlayers();
     Optional<Integer> winner;
     Whist newWhist = new Whist();
     do {
