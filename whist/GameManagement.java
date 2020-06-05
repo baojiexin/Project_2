@@ -71,7 +71,7 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
 	@Override
 	public void initPlayers(){
 		for(int i = 0; i < GameInformation.nbPlayers; i++){
-			GameInformation.players.put(i, "NPC");
+			GameInformation.players.put(i, "Legal_NPC");
 		}
 		if(GameInformation.Interactive_Player >= 1){
 			for (int i = 0; i < GameInformation.Interactive_Player; i++){
@@ -82,7 +82,7 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
 			int marked = 0;
 			int i = 0;
 			while(marked < GameInformation.Smart_NPC){
-				if(GameInformation.players.get(i) == "NPC"){
+				if(GameInformation.players.get(i) == "Legal_NPC"){
 					GameInformation.players.put(i, "Smart_NPC");
 					marked++;
 					i++;
@@ -166,11 +166,11 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
     		setStatus("Player 0 double-click on card to lead.");
     		while (null == selected) delay(100);
         }
-        else if(GameInformation.players.get(nextPlayer) == "NPC"){
+        else if(GameInformation.players.get(nextPlayer) == "Legal_NPC"){
     		setStatusText("Player " + nextPlayer + " thinking...");
             delay(GameInformation.thinkingTime);
 			selected = NPCSelection(GameInformation.hands[nextPlayer],lead,trumps);
-			System.out.println("NPC Card" + selected);
+			System.out.println("Legal NPC Card" + selected);
         }
         else if(GameInformation.players.get(nextPlayer) == "Smart_NPC"){
 			Card largestTrump = largestTrumpOnBoard(GameInformation.currentCards,trumps);
@@ -200,13 +200,13 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
 				GameInformation.hands[0].setTouchEnabled(true);
 	    		setStatus("Player 0 double-click on card to follow.");
 	    		while (null == selected) delay(100);
-	        } else if(GameInformation.players.get(nextPlayer) == "NPC"){
+	        } else if(GameInformation.players.get(nextPlayer) == "Legal_NPC"){
 		        setStatusText("Player " + nextPlayer + " thinking...");
 		        delay(GameInformation.thinkingTime);
 		        //selected = randomCard(hands[nextPlayer]);
 
 				selected = NPCSelection(GameInformation.hands[nextPlayer],lead,trumps);
-				System.out.println("NPC Card" + selected);
+				System.out.println("Legal NPC Card" + selected);
 	        }
 	        else if(GameInformation.players.get(nextPlayer) == "Smart_NPC"){
 	        	Card largestTrump = largestTrumpOnBoard(GameInformation.currentCards,trumps);
@@ -298,7 +298,7 @@ public class GameManagement extends CardGame implements IGameManagement,PlayersM
 	}
   	return largestTrumpCard;
   }
-  
+
 /*------------------------------------------------------------------------------------------*/
 	/** New Function used for normal NPC to follow the rules*/
 	@Override

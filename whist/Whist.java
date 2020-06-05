@@ -36,8 +36,8 @@ public class Whist extends CardGame {
         GameInformation.Interactive_Player = Integer.parseInt(whistPropertie.getProperty("Interactive_Player"));
         System.out.println("The number of Interactive Player: " + GameInformation.Interactive_Player);
 
-        GameInformation.Random_NPC = Integer.parseInt(whistPropertie.getProperty("Random_NPC"));
-        System.out.println("The number of Random NPC: " + GameInformation.Random_NPC);
+        GameInformation.Legal_NPC = Integer.parseInt(whistPropertie.getProperty("Legal_NPC"));
+        System.out.println("The number of Random NPC: " + GameInformation.Legal_NPC);
 
         GameInformation.Smart_NPC = Integer.parseInt(whistPropertie.getProperty("Smart_NPC"));
         System.out.println("The number of Smart NPC: " + GameInformation.Smart_NPC);

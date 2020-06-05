@@ -21,7 +21,7 @@ public class GameInformation extends CardGame{
     public  static int nbStartCards = 0;
     public  static int winningScore = 0;
     public  static int Interactive_Player = 0;
-    public  static int Random_NPC = 0;
+    public  static int Legal_NPC = 0;
     public  static int Smart_NPC = 0;
     public static int Seed = 0;
     public static final int thinkingTime = 2000;
