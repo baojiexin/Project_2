@@ -1,5 +1,3 @@
-import ch.aplu.jcardgame.CardGame;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -8,7 +6,7 @@ import java.util.Random;
 /**
  * Main class for this project.
  */
-public class Whist extends CardGame {
+public class Whist {
 
     public static void main(String[] args) throws IOException {
         Properties whistPropertie = new Properties();

@@ -1,5 +1,4 @@
 import ch.aplu.jcardgame.Card;
-import ch.aplu.jcardgame.CardGame;
 import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
 import ch.aplu.jgamegrid.Location;
@@ -13,7 +12,7 @@ import java.util.Random;
  * This class hold all information during the game period like the number and type of players, cards that have already been
  * played on board and scores for each players etc.
  */
-public class GameInformation extends CardGame{
+public class GameInformation{
     /**
      * Data held during the game period.
      */
